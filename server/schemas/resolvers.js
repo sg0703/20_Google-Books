@@ -4,10 +4,24 @@ const { Book, User } = require('../models');
 const resolvers = {
     Query: {
         // pass in all args, that way can search by ID or username
-        user: async (parent, args) => {
-            return User.findOne({ args });
+        user: async (parent, {args}) => {
+            const foundUser = await User.findOne({
+                args
+              });
+
+              return foundUser;
+        },
+        users: async () => {
+            return User.find({});
         }
     },
+};
+
+module.exports = resolvers;
+
+/** 
+ * 
+/** 
     Mutation: {
         createUser: async (parent, { username, email, password }) => {
             const user = await User.create({ username, email, password });
@@ -50,6 +64,4 @@ const resolvers = {
               return updatedUser;
         }
     }
-};
-
-module.exports = resolvers;
+    */
