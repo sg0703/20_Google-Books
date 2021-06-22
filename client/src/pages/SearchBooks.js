@@ -70,6 +70,7 @@ const SearchBooks = () => {
     }
 
     try {
+      /**** APOLLO saveBook ****/
       await saveBook({variables: bookToSave});
 
       // if book successfully saves to user's account, save book id to state
@@ -79,7 +80,8 @@ const SearchBooks = () => {
       console.error(err);
     }
   };
-
+  
+  // added errors from useQuery below (if present)
   return (
     <>
       <Jumbotron fluid className='text-light bg-dark'>

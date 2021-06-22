@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
+
 // import useMutation, REMOVE_BOOK
 import { useMutation } from '@apollo/client';
 // bring in ADD_USER query
@@ -32,10 +33,13 @@ const SignupForm = () => {
     }
 
     try {
-      const { data } = await addUser({ variables: { ...userFormData } });
+      // send request to apollo server, then sign user in after created
+      const { data } = await addUser({ variables: userFormData });
+
       if (error) {
         console.log(error.message);
       }
+      // take token from response above and log user in 
       Auth.login(data.addUser.token);
     } catch (err) {
       console.error(err);

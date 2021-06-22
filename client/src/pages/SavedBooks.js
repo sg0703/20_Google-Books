@@ -1,24 +1,26 @@
 import React, { useEffect } from 'react';
 import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
-
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
-import { GET_ME } from '../utils/queries';
-
-// import useMutation, REMOVE_BOOK
+// import hooks, query and mutation to comm with apollo server
 import { useMutation, useQuery } from '@apollo/client';
 import { REMOVE_BOOK } from '../utils/mutations';
+import { GET_ME } from '../utils/queries';
 
 const SavedBooks = () => {
+  // on load, get userData (this includes savedBooks array)
   const { loading, error, data, refetch } = useQuery(GET_ME);
 
+  // force refetch of data each time component loads 
   useEffect(() => {
     refetch();
   },[refetch]);
 
+  // if exists, assign returned data to userData
   const userData = data?.me;
 
+  // get function to removeBook using apollo server
   const [removeBook] = useMutation(REMOVE_BOOK);
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
@@ -30,10 +32,13 @@ const SavedBooks = () => {
     }
 
     try {
+      /** SEND REMOVE BOOK TO APOLLO SERVER **/
       await removeBook({variables: { bookId }});
 
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
+
+      // force refetch of user data so that page updates instantly
       refetch();
     } catch (err) {
       console.error(err);
@@ -45,6 +50,7 @@ const SavedBooks = () => {
     return <h2>LOADING...</h2>;
   }
 
+  // added error from useQuery below if present
   return !userData ? null : (
     <>
       <Jumbotron fluid className='text-light bg-dark'>

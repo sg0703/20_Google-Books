@@ -1,4 +1,5 @@
 import React from 'react';
+// bring in apollo dependencies including context for JWT's
 import {
   ApolloClient,
   InMemoryCache,
@@ -12,6 +13,7 @@ import SearchBooks from './pages/SearchBooks';
 import SavedBooks from './pages/SavedBooks';
 import Navbar from './components/Navbar';
 
+// enable playground for testing
 const httpLink = createHttpLink({
   uri: '/graphql',
 });

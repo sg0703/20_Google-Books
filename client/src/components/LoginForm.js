@@ -14,6 +14,7 @@ const LoginForm = () => {
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
+  // define loginUser function with useMutation
   const [loginUser, { error }] = useMutation(LOGIN_USER);
 
   const handleInputChange = (event) => {
@@ -32,6 +33,7 @@ const LoginForm = () => {
     }
 
     try {
+      /** LOGIN USER AND THEN SIGN THEM IN WITH TOKEN THAT IS RETURNED */
       const { data } = await loginUser({ variables: { ...userFormData }});
 
       Auth.login(data.login.token);
