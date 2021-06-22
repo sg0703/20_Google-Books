@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
@@ -15,10 +15,10 @@ const SavedBooks = () => {
 
   useEffect(() => {
     refetch();
-  }, []);
+  },[]);
 
-  const userData = data?.user;
-  
+  const userData = data?.me;
+
   const [removeBook] = useMutation(REMOVE_BOOK);
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
@@ -34,8 +34,6 @@ const SavedBooks = () => {
 
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
-
-      // re-fetch 
       refetch();
     } catch (err) {
       console.error(err);
@@ -47,7 +45,7 @@ const SavedBooks = () => {
     return <h2>LOADING...</h2>;
   }
 
-  return (
+  return !userData ? null : (
     <>
       <Jumbotron fluid className='text-light bg-dark'>
         <Container>
