@@ -6,7 +6,7 @@
 
 For this assignment, I refactored an existing, full-stack React application that was built using a RESTful API to use GraphQL and Apollo Client/Server. The app now fully utilizes GraphQL and Apollo Client/Server. Apollo is used as middleware by the Express server. On the client side, Apollo Client hooks were used to fetch data and populate it to the component. This app is deployed on Heroku.
 
-The app uses the full MERN stack. Google Books Search also uses MongoDB Atlas, GraphQL and Apollo Client/Server.
+The app uses the full MERN stack. Google Books Search also uses MongoDB Atlas, GraphQL, Apollo Client/Server and the Google Books API.
 
 ## Table of Contents
 
