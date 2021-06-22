@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
@@ -15,7 +15,7 @@ const SavedBooks = () => {
 
   useEffect(() => {
     refetch();
-  },[]);
+  },[refetch]);
 
   const userData = data?.me;
 
@@ -30,7 +30,7 @@ const SavedBooks = () => {
     }
 
     try {
-      const response = await removeBook({variables: { bookId }});
+      await removeBook({variables: { bookId }});
 
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
@@ -50,6 +50,9 @@ const SavedBooks = () => {
       <Jumbotron fluid className='text-light bg-dark'>
         <Container>
           <h1>Viewing saved books!</h1>
+          {
+              error ? `There is an error with Apollo Client ${error}!` : null
+          }
         </Container>
       </Jumbotron>
       <Container>
