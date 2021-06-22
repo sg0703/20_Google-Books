@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
@@ -10,16 +10,16 @@ import { GET_ME } from '../utils/queries';
 import { useMutation, useQuery } from '@apollo/client';
 import { REMOVE_BOOK } from '../utils/mutations';
 
-/*******
- * 
- * SET UP TRIGGER TO UPDATE STATE
- */
-
 const SavedBooks = () => {
-  const { loading, error, data } = useQuery(GET_ME);
+  const { loading, error, data, refetch } = useQuery(GET_ME);
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
   const userData = data?.user;
   
-  const [removeBook, { error, data }] = useMutation(REMOVE_BOOK);
+  const [removeBook] = useMutation(REMOVE_BOOK);
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
@@ -34,6 +34,9 @@ const SavedBooks = () => {
 
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
+
+      // re-fetch 
+      refetch();
     } catch (err) {
       console.error(err);
     }
