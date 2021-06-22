@@ -19,7 +19,7 @@ const SearchBooks = () => {
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
 
   /*** Apollo client request **/
-  const [saveBook, { error,data }] = useMutation(SAVE_BOOK);
+  const [saveBook, { error, data }] = useMutation(SAVE_BOOK);
 
   useEffect(() => {
     return () => saveBookIds(savedBookIds);
@@ -70,7 +70,7 @@ const SearchBooks = () => {
     }
 
     try {
-      const response = await saveBook({ variables: { ...bookToSave } });
+      const response = await saveBook({variables: { ...bookToSave}});
 
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
